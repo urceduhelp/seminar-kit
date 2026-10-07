@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>සිතියම් ඉගෙනුම් මධ්‍යස්ථානය</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap">
+<style>
+:root{--bg:#12284c;--panel:#fff;--ink:#12284c;--accent:#ffc82e;--muted:#c9d3e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:#fff;font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;display:flex;flex-direction:column}
+.tabs{display:flex;gap:8px;padding:10px;overflow-x:auto;flex:none}
+.tab{flex:none;font:inherit;font-weight:700;font-size:clamp(15px,1.8vw,22px);padding:10px 18px;border-radius:12px;border:3px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;white-space:nowrap}
+.tab.on{background:var(--accent);color:var(--ink)}
+.stage{flex:1;min-height:0;margin:0 10px 10px;background:var(--panel);color:var(--ink);border-radius:16px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.bar{flex:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;background:#e3e8f2;font-size:clamp(14px,1.6vw,20px)}
+.open{font:inherit;font-weight:700;text-decoration:none;background:var(--ink);color:var(--accent);padding:8px 16px;border-radius:10px;white-space:nowrap}
+iframe{flex:1;width:100%;border:0;background:#fff}
+.view{display:none;flex:1;min-height:0;flex-direction:column}
+.view.on{display:flex}
+.note{padding:30px;text-align:center;font-size:clamp(18px,2.4vw,30px);line-height:1.8}
+.doc{overflow:auto;padding:22px 30px;font-size:clamp(16px,2vw,26px);line-height:1.7}
+.doc h2{margin:0 0 6px;color:var(--ink)}
+.doc h3{margin:18px 0 4px;background:var(--accent);display:inline-block;padding:2px 14px;border-radius:8px}
+.doc ul{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="tabs" id="tabs"></div>
+<div class="stage" id="stage"></div>
+
+<div id="doc" style="display:none">
+<div class="doc">
+<h2>සිතියම් ලේඛනයක් තනමු – උපදෙස්</h2>
+<p>සිතියම් ස්ථාන 12 බැගින් සමූහ 10ක් තනන්න. ඉන් 6ක් ලංකාවට අදාළ විය යුතු අතර 4ක් ලෝක සිතියමට අදාළ විය යුතු ය. ඒ එක් එක් සමූහයක් පහත සංයුතිය අනුව තැනිය යුතු වේ.</p>
+<h3>ලංකා සිතියම් සඳහා</h3>
+<ul>
+<li>ගංගා 2ක්</li>
+<li>වරාය 2ක්</li>
+<li>වැව්, අමුණු හා ඇළමාර්ග ඇසුරෙන් ස්ථාන 2ක්</li>
+<li>රාජධානි හා උප පාලන මධ්‍යස්ථාන ඇසුරෙන් ස්ථාන 2ක්</li>
+<li>යටත් විජිත සමයට සම්බන්ධ ස්ථාන 1ක්</li>
+<li>ප්‍රාග් හා පූර්ව ඓතිහාසික ස්ථාන අතරින් 1ක්</li>
+<li>පූජනීය වැදගත්කමක් ඇති ස්ථාන 1ක්</li>
+<li>නිදහසින් පසු වඩාත් කැපී පෙනුණු නගරයක්</li>
+</ul>
+<h3>ලෝක සිතියම සඳහා</h3>
+<ul>
+<li>යුරෝපය හා ආසියාව නියෝජනය වන පරිදි රටවල් 2ක්</li>
+<li>මුහුදු, සාගර, සමුද්‍රසන්ධි, මුහුදු බොකු, කෘත්‍රිම ඇළ මාර්ග අතරින් 2ක්</li>
+<li>යුරෝපයේ කැපී පෙනෙන නගර 2ක්</li>
+<li>දකුණු ආසියාවේ කැපී පෙනෙන නගර 2ක්</li>
+<li>අග්නිදිග ආසියාවේ කැපී පෙනෙන නගර 2ක්</li>
+<li>දූපතක් හෝ දූපත් රාජ්‍යය 1ක්</li>
+<li>ලෝක යුද්ධයට හෝ පුනරුදයට සම්බන්ධ නගර 1ක්</li>
+</ul>
+</div>
+</div>
+
+<script>
+var D="https://drive.google.com/file/d/";
+var T=[
+ {n:"සිතියම් ඉඟි",u:"https://github.com/urceduhelp/seminar-kit/blob/main/guess.html",embed:false},
+ {n:"Smart Map",u:"https://amilaeduhelp.github.io/smart-map/",embed:true},
+ {n:"Geosketch",u:"https://urceduhelp.github.io/geo-sketch-map-make/",embed:true},
+ {n:"සිතියම් ලේඛනයක් තනමු",doc:true},
+ {n:"ප්‍රෙහේලිකාව",u:D+"10-Yl9KLvr2BdrYPchnfhtPrXYHy8MBLj/view?usp=sharing",e:D+"10-Yl9KLvr2BdrYPchnfhtPrXYHy8MBLj/preview",embed:true},
+ {n:"ප්‍රෙහේලිකා පිළිතුරු",u:D+"1XUG0vMQ9caOTdhHZWUQrcaIH7n_nslQ-/view?usp=sharing",e:D+"1XUG0vMQ9caOTdhHZWUQrcaIH7n_nslQ-/preview",embed:true},
+ {n:"Image Map",u:D+"1Zx6F9dU6lLISbbT11sWPCd5KdNxZwf1Q/view?usp=sharing",e:D+"1Zx6F9dU6lLISbbT11sWPCd5KdNxZwf1Q/preview",embed:true},
+ {n:"EXPLORE WORLD Game",u:D+"1aLn0FUeQV7xpfmWcL-vUfEIE8lp9MtCN/view?usp=sharing",e:D+"1aLn0FUeQV7xpfmWcL-vUfEIE8lp9MtCN/preview",embed:true}
+];
+var tabs=document.getElementById("tabs"),stage=document.getElementById("stage");
+T.forEach(function(t,k){
+  var b=document.createElement("button");b.className="tab";b.textContent=t.n;b.onclick=function(){show(k)};tabs.appendChild(b);
+  var v=document.createElement("div");v.className="view";v.id="v"+k;
+  if(t.doc){v.innerHTML=document.getElementById("doc").innerHTML;}
+  else{
+    v.innerHTML='<div class="bar"><span>'+t.n+'</span><a class="open" target="_blank" rel="noopener" href="'+t.u+'">නව Tab එකක විවෘත කරන්න ↗</a></div>';
+    if(!t.embed){v.innerHTML+='<div class="note">මෙම පිටුව මෙහි තුළ පෙන්විය නොහැක.<br>ඉහත බොත්තම ඔබා නව Tab එකක විවෘත කරන්න.</div>';}
+  }
+  stage.appendChild(v);
+});
+function show(k){
+  var bs=tabs.children,vs=stage.children;
+  for(var j=0;j<vs.length;j++){bs[j].classList.toggle("on",j===k);vs[j].classList.toggle("on",j===k);}
+  var t=T[k],v=vs[k];
+  if(t.embed&&!v.querySelector("iframe")){
+    var f=document.createElement("iframe");f.src=t.e||t.u;f.title=t.n;f.allow="fullscreen";v.appendChild(f);
+  }
+}
+show(0);
+</script>
+</body>
+</html>
