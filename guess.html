@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ඉඟියෙන් පිළිතුර සොයමු</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap">
+<style>
+:root{--bg:#12284c;--card:#fff;--ink:#12284c;--accent:#ffc82e;--muted:#c9d3e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px}
+h1{font-size:clamp(26px,4vw,48px);margin:8px 0;color:var(--accent);text-align:center}
+.count{color:var(--muted);font-size:clamp(16px,2vw,24px);margin-bottom:10px}
+.card{background:var(--card);color:var(--ink);border-radius:20px;width:100%;max-width:1100px;padding:28px;margin:8px 0}
+.label{font-weight:700;font-size:clamp(18px,2.2vw,28px);color:var(--bg);opacity:.6;margin-bottom:8px}
+.hint{font-size:clamp(24px,3.4vw,46px);line-height:1.6}
+.answer{font-size:clamp(32px,5vw,68px);font-weight:700;text-align:center;min-height:1.4em;background:var(--accent);border-radius:14px;padding:14px}
+.answer.hidden{background:#e3e8f2;color:#9aa6bd;letter-spacing:.3em}
+.row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+button{font:inherit;font-weight:700;font-size:clamp(18px,2.4vw,30px);padding:14px 30px;border-radius:14px;border:3px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+button.main{background:var(--accent);color:var(--ink)}
+button:active{transform:scale(.97)}
+details{width:100%;max-width:1100px;color:var(--muted);margin-top:18px}
+summary{cursor:pointer;font-size:18px}
+textarea{width:100%;height:160px;font:inherit;font-size:16px;margin:8px 0;padding:10px;border-radius:10px;border:0}
+</style>
+</head>
+<body>
+<h1>ඉඟියෙන් පිළිතුර සොයමු</h1>
+<div class="count" id="count"></div>
+
+<div class="card">
+  <div class="label">ඉඟිය</div>
+  <div class="hint" id="hint">ආරම්භ කිරීමට “ඉඟිය පෙන්වන්න” ඔබන්න.</div>
+</div>
+<div class="card">
+  <div class="label">පිළිතුර</div>
+  <div class="answer hidden" id="answer">? ? ?</div>
+</div>
+
+<div class="row">
+  <button id="prev">◀ කලින්</button>
+  <button class="main" id="next">ඉඟිය පෙන්වන්න</button>
+  <button class="main" id="ans">පිළිතුර පෙන්වන්න</button>
+</div>
+
+<details>
+  <summary>ගුරුතුමා/ගුරුතුමිය සඳහා: සම්පූර්ණ පෙළ ඇතුළත් කරන්න</summary>
+  <p>සෑම ඡේදයක්ම “•” ලකුණින් ආරම්භ විය යුතුයි. පළමු “-” ට පෙර පිළිතුරත් ඉන් පසු ඉඟියත් ලෙස වෙන් කෙරේ.</p>
+  <textarea id="paste" placeholder="මෙහි පෙළ Paste කරන්න..."></textarea>
+  <button id="load">පෙළ ඇතුළත් කරන්න</button>
+</details>
+
+<script>
+var SAMPLE = `• දඹුල්ල- මෙහි ඇති ප්‍රකට බෞද්ධ ලෙන් විහාරයක “ නර ඉසෙර“ පදය සදහන් සෙල්ලිපියක් තිබේ. (6 පාඩම)
+• ගොඩවාය- මෙම පැරණි වරාය ආශ්‍රිත පැරණි විහාරයකට මෙම වරායේ බදු ආදායම් පිදූ බව ඒ අසල ඇති ශිලාලේඛනයක සඳහන් වේ. (6 පාඩම)
+• මිහින්තලය- මී හරකුන් හා එළ හරකුන් ඝාතනය කරන්නන්ට මරණ දණ්ඩනය පැනවීමේ නීතියක් හතරවන මිහිඳු රජු විසින් ක්‍රියාත්මක කරන ලදී. ඒ බව සඳහන් කළ ශිලා ලේඛනයක් මේ ස්ථානයේ ඇත්තේය. (6 පාඩම)
+• උඩරංචාමඩම- කාන්තාවන් ඇස් පිහාටු වර්ණ ගැන්වීම උදෙසා භාවිත කළ ලෝහ කූරක් මේ ස්ථානයේ කළ කැණීමකදී හමු විය. (6 පාඩම)
+• කිතුල්ගල බෙලිලෙන- වර්ෂ 10500කට පෙර මේ ලෙනෙහි විසූ ප්‍රාග් ඓතිහාසික වැසියෝ ආහාරයට ගත් වල්දෙල් හා අළුකෙසෙල් පිළිබඳ සාධක මෙහි තිබී හමුවී තිබේ. (6 පාඩම)
+• කැළණිය- ලංකාවේ ඉපැරණි පුදබිමක් වන මෙය කැළණි නදිය අසල පිහිටා තිබේ. තෙවන විජයබාහු රජු මෙහි වූ විහාරය ප්‍රතිසංස්කරණය කළ අතර ධාන්‍යාකාර ස්තූපය පිහිටා ඇත්තේ ද මෙහිය. (7 පාඩම)
+• කුරුණෑගල- එතෙක් පාළි බසින් තිබූ පන්සියපනස් ජාතක පොත්වහන්සේ සිංහල බසට පරිවර්තනය කරන ලද්දේ මේ ස්ථානය ලංකාවේ අගනුවර වශයෙන් පැවති යුගයේය. (7 පාඩම)
+• ගාල්ල- යුං-ලෝ අධිරාජයා විසින් මෙහෙයවනු ලැබූ චීන සෙන්පතියකු මේ නගරය ආසන්නයේ චීන, පර්සියන් හා දෙමළ භාෂා වලින් කළ සෙල්ලිපියක් පිහිටුවා තිබේ. (7 පාඩම)`;
+
+var items=[], i=-1, hintShown=false;
+function parse(t){
+  return t.split("•").map(function(s){return s.trim()}).filter(Boolean).map(function(s){
+    var k=s.indexOf("-"); if(k<1) return null;
+    var a=s.slice(0,k).trim();
+    var h=s.slice(k+1).replace(/\(\s*\d+\s*පාඩම\s*\)/g,"").replace(/\s+/g," ").trim();
+    return h?{a:a,h:h}:null;
+  }).filter(Boolean);
+}
+var H=document.getElementById("hint"),A=document.getElementById("answer"),C=document.getElementById("count"),N=document.getElementById("next");
+function render(){
+  C.textContent = i<0 ? items.length+" ප්‍රශ්න" : "ප්‍රශ්නය "+(i+1)+" / "+items.length;
+  if(i<0){H.textContent="ආරම්භ කිරීමට “ඉඟිය පෙන්වන්න” ඔබන්න.";}
+  else H.textContent=items[i].h;
+  A.className="answer hidden"; A.textContent="? ? ?";
+  N.textContent = i<0 ? "ඉඟිය පෙන්වන්න" : "ඊළඟ ඉඟිය ▶";
+}
+N.onclick=function(){ if(i<items.length-1){i++;render();} else {C.textContent="අවසානයි! 🎉";} };
+document.getElementById("prev").onclick=function(){ if(i>0){i--;render();} };
+document.getElementById("ans").onclick=function(){
+  if(i<0) return; A.className="answer"; A.textContent=items[i].a;
+};
+document.getElementById("load").onclick=function(){
+  var d=parse(document.getElementById("paste").value);
+  if(d.length){items=d;i=-1;render();}
+};
+items=parse(SAMPLE); render();
+</script>
+</body>
+</html>
