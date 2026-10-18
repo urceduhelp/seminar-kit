@@ -4,29 +4,99 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>සිතියම් ඉගෙනුම් මධ්‍යස්ථානය</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&display=swap">
 <style>
+:root{
+  --bg1:#0a1930;--bg2:#12284c;--glow:rgba(245,196,81,.16);--glow2:rgba(95,211,188,.12);
+  --fg:#f4f6fb;--muted:#9fb0cf;--gold:#f5c451;
+  --card:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
+  --bd:rgba(255,255,255,.14);--sh:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);
+  --sh-h:0 18px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark}}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg1:#f7f3ea;--bg2:#e9eef8;--glow:rgba(245,196,81,.30);--glow2:rgba(95,211,188,.22);
+  --fg:#12284c;--muted:#5a6b8c;--gold:#b8860b;
+  --card:linear-gradient(150deg,#ffffff,#f3f6fc);--bd:rgba(18,40,76,.10);
+  --sh:0 8px 24px rgba(18,40,76,.10),inset 0 1px 0 #fff;--sh-h:0 16px 36px rgba(18,40,76,.18),inset 0 1px 0 #fff;
+  color-scheme:light}}
+:root[data-theme="dark"]{color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{background:#12284c;color:#fff;font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;padding:max(10px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
-.grid{height:100%;min-height:100%;display:grid;gap:10px;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(110px,1fr)}
-.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px;text-align:center;text-decoration:none;color:var(--fg,#12284c);background:var(--bg,#ffc82e);border-radius:18px;font-weight:700;font-size:clamp(16px,2.2vw,32px);line-height:1.35;box-shadow:0 4px 0 rgba(0,0,0,.28);transition:transform .12s,box-shadow .12s}
-.tile:hover,.tile:focus-visible{transform:translateY(-3px);box-shadow:0 8px 0 rgba(0,0,0,.28);outline:3px solid #fff}
-.tile:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
-.ic{font-size:clamp(30px,5vw,70px);line-height:1}
-.c1{--bg:#ffc82e}.c2{--bg:#7fd6c2}.c3{--bg:#ff9f80}.c4{--bg:#b7a6ff}
-.c5{--bg:#8ec5ff}.c6{--bg:#ffd6e0}.c7{--bg:#c8e87c}.c8{--bg:#ffb347}
+body{
+  display:flex;flex-direction:column;gap:14px;color:var(--fg);
+  font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;
+  background:radial-gradient(900px 500px at 12% -10%,var(--glow),transparent 60%),
+             radial-gradient(800px 500px at 100% 110%,var(--glow2),transparent 60%),
+             linear-gradient(160deg,var(--bg1),var(--bg2)) fixed;
+  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));
+}
+header{display:flex;align-items:center;justify-content:center;gap:14px;text-align:center;padding:4px 0}
+header .mark{font-size:clamp(26px,3.4vw,44px);filter:drop-shadow(0 4px 10px rgba(0,0,0,.3))}
+header h1{margin:0;font-size:clamp(20px,2.8vw,38px);font-weight:700;letter-spacing:.2px;
+  background:linear-gradient(90deg,var(--gold),var(--fg) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.rule{height:1px;border:0;margin:0 auto;width:min(520px,70%);background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.7}
+.grid{flex:1;min-height:0;display:grid;gap:clamp(10px,1.4vw,18px);grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(120px,1fr)}
+.tile{
+  position:relative;overflow:hidden;isolation:isolate;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,1.2vw,16px);
+  padding:14px;text-align:center;text-decoration:none;color:var(--fg);
+  background:var(--card);border:1px solid var(--bd);border-radius:26px;box-shadow:var(--sh);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font-weight:600;font-size:clamp(15px,1.9vw,26px);line-height:1.4;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s;
+}
+.tile::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;z-index:1;background:linear-gradient(90deg,transparent,var(--a),transparent)}
+.tile::after{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .3s;
+  background:radial-gradient(circle at 50% 0%,color-mix(in srgb,var(--a) 30%,transparent),transparent 68%)}
+.tile:hover,.tile:focus-visible{transform:translateY(-6px);box-shadow:var(--sh-h);border-color:color-mix(in srgb,var(--a) 70%,transparent);outline:none}
+.tile:hover::after,.tile:focus-visible::after{opacity:1}
+.tile:focus-visible{box-shadow:0 0 0 3px var(--a),var(--sh-h)}
+.tile:active{transform:translateY(-1px) scale(.985)}
+.ic{
+  width:clamp(54px,6vw,92px);aspect-ratio:1;display:grid;place-items:center;border-radius:30%;
+  font-size:clamp(26px,3.4vw,48px);line-height:1;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--a) 70%,#fff),var(--a));
+  box-shadow:0 10px 22px color-mix(in srgb,var(--a) 40%,transparent),inset 0 1px 0 rgba(255,255,255,.55);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1);
+}
+.tile:hover .ic{transform:scale(1.08) rotate(-3deg)}
+.lb{padding:0 4px}
+.tile.off{cursor:default;opacity:.55;filter:saturate(.6)}
+.tile.off:hover{transform:none;box-shadow:var(--sh);border-color:var(--bd)}
+.tile.off:hover::after{opacity:0}
+.tag{position:absolute;top:12px;right:12px;font-size:11px;font-weight:600;padding:2px 10px;border-radius:99px;
+  background:color-mix(in srgb,var(--gold) 20%,transparent);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
 @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);height:auto}}
+@media(max-width:600px){html,body{height:auto;min-height:100%}.grid{grid-template-columns:repeat(2,1fr);flex:none}}
+@media(prefers-reduced-motion:reduce){.tile,.ic,.tile::after{transition:none}.tile:hover{transform:none}}
 </style>
 </head>
 <body>
+<header><span class="mark">🧭</span><h1>සිතියම් ඉගෙනුම් මධ්‍යස්ථානය</h1></header>
+<hr class="rule">
 <main class="grid" id="grid"></main>
 
 <script type="text/template" id="doc">
 <!DOCTYPE html><html lang="si"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>සිතියම් ලේඛනයක් තනමු</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap">
-<style>body{margin:0;padding:24px 32px;background:#fff;color:#12284c;font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;font-size:clamp(16px,2vw,26px);line-height:1.7}h2{margin:0 0 6px}h3{margin:18px 0 4px;background:#ffc82e;display:inline-block;padding:2px 14px;border-radius:8px}ul{margin:6px 0}</style></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#f4efe4;--card:#fff;--fg:#12284c;--muted:#5a6b8c;--gold:#f5c451;--bd:rgba(18,40,76,.10)}
+@media(prefers-color-scheme:dark){:root{--bg:#0a1930;--card:#16305a;--fg:#f4f6fb;--muted:#9fb0cf;--bd:rgba(255,255,255,.14)}}
+*{box-sizing:border-box}
+body{margin:0;padding:clamp(14px,3vw,36px);background:var(--bg);color:var(--fg);font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;font-size:clamp(16px,1.9vw,24px);line-height:1.75}
+.sheet{max-width:980px;margin:0 auto;background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:clamp(18px,3vw,40px);box-shadow:0 18px 44px rgba(18,40,76,.16)}
+h2{margin:0 0 10px;font-size:1.25em;padding-bottom:12px;border-bottom:3px solid var(--gold)}
+p{color:var(--muted);margin:12px 0 4px}
+h3{margin:24px 0 8px;display:inline-block;padding:3px 18px;border-radius:99px;font-size:1em;color:#12284c;background:linear-gradient(135deg,#ffe08a,var(--gold))}
+ul{margin:8px 0;padding:0;list-style:none}
+li{position:relative;padding:6px 0 6px 30px;border-bottom:1px dashed var(--bd)}
+li::before{content:"";position:absolute;left:6px;top:.95em;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,196,81,.25)}
+li:last-child{border-bottom:0}
+</style></head><body><div class="sheet">
 <h2>සිතියම් ලේඛනයක් තනමු – උපදෙස්</h2>
 <p>සිතියම් ස්ථාන 12 බැගින් සමූහ 10ක් තනන්න. ඉන් 6ක් ලංකාවට අදාළ විය යුතු අතර 4ක් ලෝක සිතියමට අදාළ විය යුතු ය. ඒ එක් එක් සමූහයක් පහත සංයුතිය අනුව තැනිය යුතු වේ.</p>
 <h3>ලංකා සිතියම් සඳහා</h3>
@@ -50,11 +120,13 @@ body{background:#12284c;color:#fff;font-family:"Noto Sans Sinhala","Iskoola Pota
 <li>දූපතක් හෝ දූපත් රාජ්‍යය 1ක්</li>
 <li>ලෝක යුද්ධයට හෝ පුනරුදයට සම්බන්ධ නගර 1ක්</li>
 </ul>
-</body></html>
+</div></body></html>
 </script>
 
 <script>
 var D="https://drive.google.com/file/d/";
+var PH="--addlinkhere--";
+var COLORS=["#f5c451","#5fd3bc","#ff8f70","#a995ff","#6fb8ff","#ff9fb8","#b5e063","#ffae42"];
 var T=[
  {n:"සිතියම් ඉඟි",i:"📍",u:"https://urceduhelp.github.io/map_point_gs/"},
  {n:"Smart Map",i:"🗺️",u:"https://amilaeduhelp.github.io/smart-map/"},
@@ -66,21 +138,23 @@ var T=[
  {n:"EXPLORE WORLD Game",i:"🌍",u:D+"1aLn0FUeQV7xpfmWcL-vUfEIE8lp9MtCN/view?usp=sharing"},
  {n:"වාග් මාලාව",i:"📚",u:"https://amilaeduhelp.github.io/-2025/indpedia.html"},
  {n:"සිංහල ශබ්දකෝෂය",i:"📖",u:"https://amilaeduhelp.github.io/dictionary/index.html"},
- {n:"MCQ test",i:"❓",u:"--addlinkhere--"},
- {n:"Qs from past papers",i:"📄",u:"--addlinkhere--"},
- {n:"White board with Map",i:"🧭",u:"https://urceduhelp.github.io/whiteboard/"},
- {n:"Edu Points",i:"⭐",u:"--addlinkhere--"}
+ {n:"MCQ test",i:"❓",u:PH},
+ {n:"Qs from past papers",i:"📄",u:PH},
+ {n:"White board with Map",i:"🧭",u:https://urceduhelp.github.io/whiteboard/},
+ {n:"Edu Points",i:"⭐",u:PH}
 ];
 var grid=document.getElementById("grid");
 var docUrl="";
 try{docUrl=URL.createObjectURL(new Blob([document.getElementById("doc").textContent],{type:"text/html;charset=utf-8"}));}catch(e){}
 T.forEach(function(t,k){
-  var a=document.createElement("a");
-  a.className="tile c"+(k%8+1);
-  a.href=t.doc?docUrl:t.u;
-  a.target="_blank";a.rel="noopener";
-  a.innerHTML='<span class="ic">'+t.i+'</span><span></span>';
-  a.lastChild.textContent=t.n;
+  var off=!t.doc&&(!t.u||t.u===PH);
+  var a=document.createElement(off?"div":"a");
+  a.className="tile"+(off?" off":"");
+  a.style.setProperty("--a",COLORS[k%COLORS.length]);
+  if(off){a.setAttribute("aria-disabled","true");}
+  else{a.href=t.doc?docUrl:t.u;a.target="_blank";a.rel="noopener";}
+  a.innerHTML='<span class="ic">'+t.i+'</span><span class="lb"></span>'+(off?'<span class="tag">ළඟදීම</span>':'');
+  a.querySelector(".lb").textContent=t.n;
   grid.appendChild(a);
 });
 </script>
