@@ -57,7 +57,7 @@ input:focus{outline:2px solid var(--red);outline-offset:1px}
 </style>
 </head>
 <body>
-<header><span style="width:1px"></span><h1>ඉතිහාසය සම්මන්ත්‍රණය</h1><button class="admin" id="adminBtn" type="button">Admin පිවිසුම</button></header>
+<header><span style="width:1px"></span><h1>ඉතිහාසය සම්මන්ත්‍රණය</h1><button class="admin" id="adminBtn" type="button">Admin පිවිසෙන්න</button></header>
 <main class="grid" id="grid"></main>
 
 <dialog id="panel"><div class="dh"><h2 id="pTitle"></h2><button class="x" type="button" id="pClose" aria-label="වසන්න">×</button></div>
@@ -180,14 +180,15 @@ T.forEach(function(t,k){
 });
 
 /* ---------- Admin / Supabase ---------- */
-var isAdmin=false,cur=null;
+var isAdmin=false,signed=false,cur=null;
 var $=function(id){return document.getElementById(id)};
 var panel=$("panel"),loginD=$("login"),adminBtn=$("adminBtn");
 
-function applyAdmin(v){isAdmin=!!v;adminBtn.textContent=isAdmin?"Admin පිටවීම":"Admin පිවිසුම";if(cur&&panel.open)render();}
+function applyAdmin(v){isAdmin=!!v;adminBtn.textContent=isAdmin?"Admin පිටවීම":signed?"පිටවීම (Admin නොවේ)":"Admin පිවිසෙන්න";if(cur&&panel.open)render();}
 /* ලොග් වී ඇති සෑම කෙනෙක්ම නොව, admins වගුවේ ඇති (is_admin) අයට පමණක් පාලන පෙන්වයි.
    is_admin() ශ්‍රිතය තවම සාදා නැත්නම් පමණක් session එක අනුව පෙන්වයි (DB policy ආරක්ෂාව වෙනම පවතී). */
 function setAdmin(s){
+  signed=!!s;
   if(!s||!sb){applyAdmin(false);return;}
   var t=sb.rpc("is_admin");
   t.then(function(r){applyAdmin(r.error?true:r.data===true);},function(){applyAdmin(true);});
@@ -197,7 +198,7 @@ if(sb){
   sb.auth.onAuthStateChange(function(_e,s){setAdmin(s);});
 }
 adminBtn.addEventListener("click",function(){
-  if(isAdmin){sb.auth.signOut();}
+  if(signed||isAdmin){sb.auth.signOut();}
   else{$("lMsg").textContent="";loginD.showModal();}
 });
 $("lClose").addEventListener("click",function(){loginD.close();});
@@ -209,12 +210,12 @@ $("lForm").addEventListener("submit",function(e){
   if(!sb){$("lMsg").className="msg err";$("lMsg").textContent="Supabase සම්බන්ධ නොවීය.";return;}
   $("lMsg").className="msg";$("lMsg").textContent="පරීක්ෂා කරමින්...";
   sb.auth.signInWithPassword({email:$("lEmail").value.trim(),password:$("lPass").value}).then(function(r){
-    if(r.error){$("lMsg").className="msg err";$("lMsg").textContent="Email හෝ Password වැරදියි.";}
+    if(r.error){$("lMsg").className="msg err";$("lMsg").textContent="Email හෝ Password වැරදියි. ("+(r.error.message||"")+")";}
     else{$("lPass").value="";loginD.close();}
   });
 });
 
-var rows=[],status="";
+var rows=[],status="",hasSort=true;
 function openPanel(t){
   cur=t;rows=[];status="ප්‍රවේශ වෙමින්...";
   $("pTitle").textContent=t.n;render();panel.showModal();
@@ -222,12 +223,25 @@ function openPanel(t){
   load();
 }
 function load(){
-  var c=cur.cat;
-  sb.from("links").select("*").eq("category",c).order("created_at",{ascending:false}).then(function(r){
+  var c=cur.cat,q=sb.from("links").select("*").eq("category",c);
+  q=hasSort?q.order("sort_order",{ascending:true,nullsFirst:false}).order("created_at",{ascending:false}):q.order("created_at",{ascending:false});
+  q.then(function(r){
     if(!cur||cur.cat!==c)return;
+    /* sort_order තීරුව තවම නැත්නම් පැරණි පිළිවෙලට (අලුත්ම මුලින්) වැටේ */
+    if(r.error&&hasSort&&(r.error.code==="42703"||/sort_order/.test(r.error.message||""))){hasSort=false;load();return;}
     if(r.error){status="Link ලබා ගැනීමට නොහැකි විය.";rows=[];}
     else{rows=r.data||[];status=rows.length?"":"තවම Link නැත.";}
     render();
+  });
+}
+/* Admin: Link එකක් ඉහළට (-1) / පහළට (+1) යැවීම; නව පිළිවෙල 0,1,2… ලෙස සුරැකේ */
+function move(i,d){
+  var j=i+d;if(j<0||j>=rows.length)return;
+  var t=rows[i];rows[i]=rows[j];rows[j]=t;render();
+  var ups=[];
+  rows.forEach(function(r,k){if(r.sort_order!==k){r.sort_order=k;ups.push(sb.from("links").update({sort_order:k}).eq("id",r.id).select());}});
+  Promise.all(ups).then(function(rs){
+    if(rs.some(function(x){return x.error||!x.data||!x.data.length;})){alert("පිළිවෙල සුරැකීමට නොහැකි විය. නැවත පිවිසී උත්සාහ කරන්න.");load();}
   });
 }
 function normUrl(u){u=u.trim();if(!/^https?:\/\//i.test(u))u="https://"+u;try{var x=new URL(u);return(x.protocol==="http:"||x.protocol==="https:")?x.href:"";}catch(e){return"";}}
@@ -239,7 +253,7 @@ function copyText(txt,btn){
 function render(){
   var L=$("pList"),A=$("pAdd");L.innerHTML="";A.innerHTML="";
   if(status){var p=document.createElement("p");p.className="empty";p.textContent=status;L.appendChild(p);}
-  rows.forEach(function(r){
+  rows.forEach(function(r,i){
     var it=document.createElement("div");it.className="item";
     var a=document.createElement("a");a.href=normUrl(r.url)||"#";a.target="_blank";a.rel="noopener";
     a.textContent=r.title;
@@ -247,6 +261,13 @@ function render(){
     it.appendChild(a);
     if(cur.copy){var c=document.createElement("button");c.type="button";c.className="btn";c.textContent="Copy";
       c.addEventListener("click",function(){copyText(r.url,c);});it.appendChild(c);}
+    if(isAdmin&&hasSort){
+      [["↑",-1,"ඉහළට යවන්න"],["↓",1,"පහළට යවන්න"]].forEach(function(m){
+        var g=document.createElement("button");g.type="button";g.className="btn";g.textContent=m[0];g.title=m[2];g.setAttribute("aria-label",m[2]);
+        g.disabled=(m[1]<0&&i===0)||(m[1]>0&&i===rows.length-1);
+        g.addEventListener("click",function(){move(i,m[1]);});it.appendChild(g);
+      });
+    }
     if(isAdmin){var d=document.createElement("button");d.type="button";d.className="btn";d.textContent="ඉවත් කරන්න";
       d.addEventListener("click",function(){
         if(!confirm("මෙම Link එක ඉවත් කරන්නද?"))return;
@@ -261,12 +282,15 @@ function render(){
     e.preventDefault();
     var u=normUrl(f.u.value),m=f.querySelector(".msg");
     if(!u){m.className="msg err";m.textContent="වලංගු Link එකක් ඇතුළත් කරන්න.";return;}
-    sb.from("links").insert({category:cur.cat,title:f.t.value.trim(),url:u}).then(function(r){
+    var row={category:cur.cat,title:f.t.value.trim(),url:u};
+    if(hasSort){var mx=rows.length-1;rows.forEach(function(r){if(typeof r.sort_order==="number"&&r.sort_order>mx)mx=r.sort_order;});row.sort_order=mx+1;}
+    sb.from("links").insert(row).then(function(r){
       if(r.error){m.className="msg err";m.textContent="එකතු කළ නොහැකි විය. නැවත පිවිසෙන්න.";}
       else{f.reset();load();}
     });
   });
   A.appendChild(f);
+  if(!hasSort){var n=document.createElement("p");n.className="msg";n.textContent="පිළිවෙල සැකසීමට Supabase හි links වගුවට sort_order තීරුව එක් කරන්න (SQL උපදෙස් බලන්න).";A.appendChild(n);}
 }
 </script>
 </body>
