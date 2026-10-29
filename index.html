@@ -57,7 +57,7 @@ input:focus{outline:2px solid var(--red);outline-offset:1px}
 </style>
 </head>
 <body>
-<header><span style="width:1px"></span><h1>ඉතිහාසය සම්මන්ත්‍රණය</h1><button class="admin" id="adminBtn" type="button">Admin පිවිසෙන්න</button></header>
+<header><span style="width:1px"></span><h1>ඉතිහාසය සම්මන්ත්‍රණය</h1><button class="admin" id="adminBtn" type="button">Admin පිවිසුම</button></header>
 <main class="grid" id="grid"></main>
 
 <dialog id="panel"><div class="dh"><h2 id="pTitle"></h2><button class="x" type="button" id="pClose" aria-label="වසන්න">×</button></div>
@@ -184,7 +184,7 @@ var isAdmin=false,cur=null;
 var $=function(id){return document.getElementById(id)};
 var panel=$("panel"),loginD=$("login"),adminBtn=$("adminBtn");
 
-function applyAdmin(v){isAdmin=!!v;adminBtn.textContent=isAdmin?"Admin පිටවීම":"Admin පිවිසෙන්න";if(cur&&panel.open)render();}
+function applyAdmin(v){isAdmin=!!v;adminBtn.textContent=isAdmin?"Admin පිටවීම":"Admin පිවිසුම";if(cur&&panel.open)render();}
 /* ලොග් වී ඇති සෑම කෙනෙක්ම නොව, admins වගුවේ ඇති (is_admin) අයට පමණක් පාලන පෙන්වයි.
    is_admin() ශ්‍රිතය තවම සාදා නැත්නම් පමණක් session එක අනුව පෙන්වයි (DB policy ආරක්ෂාව වෙනම පවතී). */
 function setAdmin(s){
