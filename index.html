@@ -94,7 +94,7 @@ var sb=null;
 try{sb=window.supabase.createClient("https://cfozezblcpyfyzsdjvph.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmb3plemJsY3B5Znl6c2RqdnBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5NTE4NDgsImV4cCI6MjEwNzUyNzg0OH0.SMEcfEw9uuXq9VrsRFzl9pyZub40auLjHWdTJ1iGwdE");}catch(e){}
 
 var D="https://drive.google.com/file/d/";
-/* k = admin පිටුවේ තීරු යතුර; u = පෙරනිමි Link (tile_site_links table එකේ Link එකක් තිබුණොත් එය ප්‍රමුඛ වේ) */
+/* k = admin පිටුවේ තීරු යතුර; u = පෙරනිමි Link (tile_links table එකේ Link එකක් තිබුණොත් එය ප්‍රමුඛ වේ) */
 var T=[
  {k:"map_point",n:"සිතියම් ඉඟි",i:"pin",u:"https://urceduhelp.github.io/map_point_gs/"},
  {k:"smart_map",n:"Smart Map",i:"map",u:"https://amilaeduhelp.github.io/smart-map/"},
@@ -158,7 +158,7 @@ function build(){
 }
 build();
 /* Admin පිටුවෙන් සුරැකූ Link ලබා ගෙන බොත්තම් යළි සාදයි */
-if(sb){sb.from("tile_site_links").select("tile_key,url").then(function(r){
+if(sb){sb.from("tile_links").select("tile_key,url").then(function(r){
   if(r.error||!r.data)return;
   r.data.forEach(function(x){O[x.tile_key]=x.url;});build();
 });}
