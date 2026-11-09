@@ -6,67 +6,44 @@
 <title>ඉතිහාසය සම්මන්ත්‍රණය</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&display=swap">
 <style>
-:root{--fg:#2b2b2b;--muted:#6b6b70;--line:#d2d1cf;--red:#BC3A19;--peach:#FBDAA3;--green:#D3E6A6;--gray:#D2D1CF;--bg:#EFEFEF;color-scheme:light;box-sizing:border-box}
+:root{--fg:#2b2b2b;--muted:#6b6b70;--line:#d2d1cf;--red:#BC3A19;--peach:#FBDAA3;--green:#D3E6A6;--gray:#D2D1CF;--bg:#EFEFEF;color-scheme:light}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);
-  font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;
-  padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
-header{max-width:1280px;margin:0 auto 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-h1{margin:0;color:var(--red);flex:1 1 280px;text-align:center;font-size:clamp(22px,3.2vw,38px);font-weight:700;line-height:1.4}
-.admin{font:inherit;font-size:14px;padding:8px 18px;border-radius:99px;border:1px solid var(--red);background:var(--red);color:#fff;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.08)}
-.admin:hover{box-shadow:0 6px 16px rgba(0,0,0,.14)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",sans-serif;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+header{max-width:1280px;margin:0 auto 22px}
+h1{margin:0;color:var(--red);text-align:center;font-size:clamp(22px,3.2vw,38px);font-weight:700;line-height:1.4}
 .grid{max-width:1280px;margin:0 auto;display:grid;gap:clamp(14px,2vw,26px);grid-template-columns:repeat(auto-fill,minmax(clamp(150px,22vw,230px),1fr))}
-.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-  min-height:clamp(130px,16vw,180px);padding:18px 12px;text-align:center;text-decoration:none;color:var(--fg);
-  font:inherit;font-weight:600;font-size:clamp(15px,1.5vw,20px);line-height:1.45;
-  background:#fff;border:1px solid var(--line);border-radius:22px;cursor:pointer;
-  box-shadow:0 6px 16px rgba(0,0,0,.10),0 1px 3px rgba(0,0,0,.06);
-  transition:transform .22s ease,box-shadow .22s ease}
-.tile:hover,.tile:focus-visible{transform:translateY(-5px) scale(1.06);outline:none;
-  box-shadow:0 18px 32px rgba(0,0,0,.18),inset 3px 3px 7px #fff,inset -3px -3px 9px rgba(0,0,0,.09)}
-.tile:hover,.tile:focus-visible{border-color:var(--red)}
-.tile:active{transform:scale(1.02);box-shadow:0 6px 12px rgba(0,0,0,.14),inset 2px 2px 6px rgba(0,0,0,.10)}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:clamp(130px,16vw,180px);padding:18px 12px;text-align:center;text-decoration:none;color:var(--fg);font:inherit;font-weight:600;font-size:clamp(15px,1.5vw,20px);line-height:1.45;background:#fff;border:1px solid var(--line);border-radius:22px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.10),0 1px 3px rgba(0,0,0,.06);transition:transform .22s ease,box-shadow .22s ease}
+.tile:hover,.tile:focus-visible{transform:translateY(-5px) scale(1.06);outline:none;border-color:var(--red);box-shadow:0 18px 32px rgba(0,0,0,.18),inset 3px 3px 7px #fff,inset -3px -3px 9px rgba(0,0,0,.09)}
+.tile:active{transform:scale(1.02)}
 .ic{width:clamp(52px,6vw,74px);aspect-ratio:1;display:grid;place-items:center;border-radius:24px;background:var(--p,var(--peach));box-shadow:inset 0 -3px 6px rgba(0,0,0,.06)}
 .ic svg{width:54%;height:54%;fill:none;stroke:var(--red);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.lb{overflow-wrap:anywhere;word-break:normal}
+.lb{overflow-wrap:anywhere}
 .tile.off{cursor:default;opacity:.5}
-.tile.off:hover{transform:none;box-shadow:0 6px 16px rgba(0,0,0,.10)}
+.tile.off:hover{transform:none;box-shadow:0 6px 16px rgba(0,0,0,.10);border-color:var(--line)}
 .tag{position:absolute;top:10px;right:10px;font-size:11px;padding:2px 9px;border-radius:99px;background:var(--gray);color:var(--muted)}
 dialog{border:0;padding:0;border-radius:24px;width:min(640px,calc(100vw - 24px));max-height:calc(100vh - 32px);color:var(--fg);background:#fff;box-shadow:0 24px 60px rgba(0,0,0,.3)}
 dialog::backdrop{background:rgba(0,0,0,.35)}
 .dh{background:var(--peach);border-radius:24px 24px 0 0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 22px;border-bottom:1px solid var(--line)}
 .dh h2{margin:0;font-size:clamp(18px,2.4vw,24px)}
-.x{font:inherit;font-size:22px;line-height:1;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.10)}
+.x{font:inherit;font-size:22px;line-height:1;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer}
 .db{padding:16px 22px 22px;overflow:auto;max-height:calc(100vh - 130px)}
 .item{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px dashed var(--line)}
 .item a{flex:1;min-width:0;color:var(--fg);text-decoration:none;font-weight:600;overflow-wrap:anywhere}
 .item a:hover{color:var(--red);text-decoration:underline}
 .item small{display:block;color:var(--muted);font-weight:400;font-size:12px;overflow-wrap:anywhere}
-.btn{font:inherit;font-size:14px;padding:8px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--fg);cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.10);white-space:nowrap}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.16)}
-.btn.dark{background:var(--red);color:#fff;border-color:var(--red)}
-.empty,.msg{color:var(--muted);padding:14px 0;margin:0}
-.msg.err{color:#b3261e}
-form{display:grid;gap:10px;margin-top:14px}
-input{font:inherit;padding:10px 12px;border-radius:12px;border:1px solid #cfcfd6;background:#fff;color:var(--fg);width:100%}
-input:focus{outline:2px solid var(--red);outline-offset:1px}
-.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-@media(max-width:480px){.item{flex-wrap:wrap}.grid{grid-template-columns:repeat(2,1fr)}}
-@media(prefers-reduced-motion:reduce){.tile,.btn{transition:none}.tile:hover{transform:none}}
+.btn{font:inherit;font-size:14px;padding:8px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer;white-space:nowrap}
+.empty{color:var(--muted);padding:14px 0;margin:0}
+@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.tile{transition:none}.tile:hover{transform:none}}
 </style>
 </head>
 <body>
-<header><span style="width:1px"></span><h1>ඉතිහාසය සම්මන්ත්‍රණය</h1><button class="admin" id="adminBtn" type="button">Admin පිවිසෙන්න</button></header>
+<header><h1>ඉතිහාසය සම්මන්ත්‍රණය</h1></header>
 <main class="grid" id="grid"></main>
 
 <dialog id="panel"><div class="dh"><h2 id="pTitle"></h2><button class="x" type="button" id="pClose" aria-label="වසන්න">×</button></div>
-<div class="db"><div id="pList"></div><div id="pAdd"></div></div></dialog>
-
-<dialog id="login"><div class="dh"><h2>Admin පිවිසුම</h2><button class="x" type="button" id="lClose" aria-label="වසන්න">×</button></div>
-<div class="db"><form id="lForm"><input id="lEmail" type="email" placeholder="Admin Email" autocomplete="username" required>
-<input id="lPass" type="password" placeholder="Admin Password" autocomplete="current-password" required>
-<button class="btn dark" type="submit">පිවිසෙන්න</button><p class="msg" id="lMsg" role="alert"></p></form></div></dialog>
+<div class="db"><div id="pList"></div></div></dialog>
 
 <script type="text/template" id="doc">
 <!DOCTYPE html><html lang="si"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>සිතියම් ලේඛනයක් තනමු</title>
@@ -113,36 +90,33 @@ li:last-child{border-bottom:0}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
-var SB_URL="https://cfozezblcpyfyzsdjvph.supabase.co";
-var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmb3plemJsY3B5Znl6c2RqdnBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5NTE4NDgsImV4cCI6MjEwNzUyNzg0OH0.SMEcfEw9uuXq9VrsRFzl9pyZub40auLjHWdTJ1iGwdE";
 var sb=null;
-try{sb=window.supabase.createClient(SB_URL,SB_KEY);}catch(e){}
+try{sb=window.supabase.createClient("https://cfozezblcpyfyzsdjvph.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmb3plemJsY3B5Znl6c2RqdnBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5NTE4NDgsImV4cCI6MjEwNzUyNzg0OH0.SMEcfEw9uuXq9VrsRFzl9pyZub40auLjHWdTJ1iGwdE");}catch(e){}
 
 var D="https://drive.google.com/file/d/";
-var PH="--addlinkhere--";
+/* k = admin පිටුවේ තීරු යතුර; u = පෙරනිමි Link (tile_site_links table එකේ Link එකක් තිබුණොත් එය ප්‍රමුඛ වේ) */
 var T=[
- {n:"සිතියම් ඉඟි",i:"pin",u:"https://urceduhelp.github.io/map_point_gs/"},
- {n:"Smart Map",i:"map",u:"https://amilaeduhelp.github.io/smart-map/"},
- {n:"Geosketch",i:"pencil",u:"https://urceduhelp.github.io/geosketch-with-smart-guide/"},
- {n:"සිතියම් ලේඛනයක් තනමු",i:"doc",doc:true},
- {n:"ප්‍රෙහේලිකාව",i:"puzzle",u:D+"1XUG0vMQ9caOTdhHZWUQrcaIH7n_nslQ-/view?usp=sharing"},
- {n:"ප්‍රෙහේලිකාව පිළිතුරු",i:"check",u:D+"10-Yl9KLvr2BdrYPchnfhtPrXYHy8MBLj/view?usp=sharing"},
- {n:"Image Map",i:"image",u:D+"1Zx6F9dU6lLISbbT11sWPCd5KdNxZwf1Q/view?usp=sharing"},
- {n:"EXPLORE WORLD Game",i:"globe",u:D+"1aLn0FUeQV7xpfmWcL-vUfEIE8lp9MtCN/view?usp=sharing"},
- {n:"ස්ථාන විස්තර",i:"list",u:"https://urceduhelp.github.io/map-plases/"},
- {n:"වාග් මාලාව",i:"book",u:"https://amilaeduhelp.github.io/-2025/indpedia.html"},
- {n:"සිංහල ශබ්දකෝෂය",i:"openbook",u:"https://amilaeduhelp.github.io/dictionary/index.html"},
- {n:"MCQ test",i:"question",u:PH},
- {n:"Qs from past papers",i:"doc",u:PH},
- {n:"White board with Map",i:"board",u:"https://urceduhelp.github.io/whiteboard/"},
- {n:"Edu Points",i:"star",u:"https://urceduhelp.github.io/edupointol/"},
- {n:"Videos",i:"video",cat:"videos"},
- {n:"Images",i:"image",cat:"images"},
- {n:"Papers",i:"list",u:"https://drive.google.com/drive/folders/1xKRk8nbJTRyzaCfCxWCy3_S0fnNX7j7N?usp=drive_link"},
- {n:"Text Book",i:"textbook",cat:"textbook"},
- {n:"Link for Students",i:"link",cat:"students",copy:true}
+ {k:"map_point",n:"සිතියම් ඉඟි",i:"pin",u:"https://urceduhelp.github.io/map_point_gs/"},
+ {k:"smart_map",n:"Smart Map",i:"map",u:"https://amilaeduhelp.github.io/smart-map/"},
+ {k:"geosketch",n:"Geosketch",i:"pencil",u:"https://urceduhelp.github.io/geosketch-with-smart-guide/"},
+ {k:"map_doc",n:"සිතියම් ලේඛනයක් තනමු",i:"doc",doc:true},
+ {k:"puzzle",n:"ප්‍රෙහේලිකාව",i:"puzzle",u:D+"1XUG0vMQ9caOTdhHZWUQrcaIH7n_nslQ-/view?usp=sharing"},
+ {k:"puzzle_ans",n:"ප්‍රෙහේලිකාව පිළිතුරු",i:"check",u:D+"10-Yl9KLvr2BdrYPchnfhtPrXYHy8MBLj/view?usp=sharing"},
+ {k:"image_map",n:"Image Map",i:"image",u:D+"1Zx6F9dU6lLISbbT11sWPCd5KdNxZwf1Q/view?usp=sharing"},
+ {k:"explore",n:"EXPLORE WORLD Game",i:"globe",u:D+"1aLn0FUeQV7xpfmWcL-vUfEIE8lp9MtCN/view?usp=sharing"},
+ {k:"places",n:"ස්ථාන විස්තර",i:"list",u:"https://urceduhelp.github.io/map-plases/"},
+ {k:"vocab",n:"වාග් මාලාව",i:"book",u:"https://amilaeduhelp.github.io/-2025/indpedia.html"},
+ {k:"dict",n:"සිංහල ශබ්දකෝෂය",i:"openbook",u:"https://amilaeduhelp.github.io/dictionary/index.html"},
+ {k:"mcq",n:"MCQ test",i:"question"},
+ {k:"past_q",n:"Qs from past papers",i:"doc"},
+ {k:"whiteboard",n:"White board with Map",i:"board",u:"https://urceduhelp.github.io/whiteboard/"},
+ {k:"edu_points",n:"Edu Points",i:"star",u:"https://urceduhelp.github.io/edupointol/"},
+ {k:"videos",n:"Videos",i:"video",cat:"videos"},
+ {k:"images",n:"Images",i:"image",cat:"images"},
+ {k:"papers",n:"Papers",i:"list",u:"https://drive.google.com/drive/folders/1xKRk8nbJTRyzaCfCxWCy3_S0fnNX7j7N?usp=drive_link"},
+ {k:"textbook",n:"Text Book",i:"textbook",cat:"textbook"},
+ {k:"students",n:"Link for Students",i:"link",cat:"students",copy:true}
 ];
-
 var IC={
 pin:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
 map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
@@ -159,63 +133,38 @@ question:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3
 board:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21l4-4 4 4"/>',
 star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
 video:'<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/>',
-papers:'<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
 textbook:'<path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M9 8h6M9 12h6"/>',
 link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'};
 var PAL=["var(--peach)","var(--green)","var(--gray)"];
-var grid=document.getElementById("grid");
-var docUrl="";
-try{docUrl=URL.createObjectURL(new Blob([document.getElementById("doc").textContent],{type:"text/html;charset=utf-8"}));}catch(e){}
-T.forEach(function(t,k){
-  var off=!t.doc&&!t.cat&&(!t.u||t.u===PH);
-  var a=document.createElement(t.cat?"button":(off?"div":"a"));
-  a.className="tile"+(off?" off":"");
-  a.style.setProperty("--p",PAL[k%3]);
-  if(t.cat){a.type="button";a.addEventListener("click",function(){openPanel(t);});}
-  else if(off){a.setAttribute("aria-disabled","true");}
-  else{a.href=t.doc?docUrl:t.u.trim();a.target="_blank";a.rel="noopener";}
-  a.innerHTML='<span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24">'+IC[t.i]+'</svg></span><span class="lb"></span>'+(off?'<span class="tag">ළඟදීම</span>':'');
-  a.querySelector(".lb").textContent=t.n;
-  grid.appendChild(a);
-});
+var $=function(i){return document.getElementById(i)};
+var grid=$("grid"),panel=$("panel"),O={},docUrl="",cur=null,rows=[],status="",hasSort=true;
+try{docUrl=URL.createObjectURL(new Blob([$("doc").textContent],{type:"text/html;charset=utf-8"}));}catch(e){}
 
-/* ---------- Admin / Supabase ---------- */
-var isAdmin=false,signed=false,cur=null;
-var $=function(id){return document.getElementById(id)};
-var panel=$("panel"),loginD=$("login"),adminBtn=$("adminBtn");
-
-function applyAdmin(v){isAdmin=!!v;adminBtn.textContent=isAdmin?"Admin පිටවීම":signed?"පිටවීම (Admin නොවේ)":"Admin පිවිසෙන්න";if(cur&&panel.open)render();}
-/* ලොග් වී ඇති සෑම කෙනෙක්ම නොව, admins වගුවේ ඇති (is_admin) අයට පමණක් පාලන පෙන්වයි.
-   is_admin() ශ්‍රිතය තවම සාදා නැත්නම් පමණක් session එක අනුව පෙන්වයි (DB policy ආරක්ෂාව වෙනම පවතී). */
-function setAdmin(s){
-  signed=!!s;
-  if(!s||!sb){applyAdmin(false);return;}
-  var t=sb.rpc("is_admin");
-  t.then(function(r){applyAdmin(r.error?true:r.data===true);},function(){applyAdmin(true);});
-}
-if(sb){
-  sb.auth.getSession().then(function(r){setAdmin(r.data&&r.data.session);});
-  sb.auth.onAuthStateChange(function(_e,s){setAdmin(s);});
-}
-adminBtn.addEventListener("click",function(){
-  if(signed||isAdmin){sb.auth.signOut();}
-  else{$("lMsg").textContent="";loginD.showModal();}
-});
-$("lClose").addEventListener("click",function(){loginD.close();});
-$("pClose").addEventListener("click",function(){panel.close();});
-[panel,loginD].forEach(function(d){d.addEventListener("click",function(e){if(e.target===d)d.close();});});
-
-$("lForm").addEventListener("submit",function(e){
-  e.preventDefault();
-  if(!sb){$("lMsg").className="msg err";$("lMsg").textContent="Supabase සම්බන්ධ නොවීය.";return;}
-  $("lMsg").className="msg";$("lMsg").textContent="පරීක්ෂා කරමින්...";
-  sb.auth.signInWithPassword({email:$("lEmail").value.trim(),password:$("lPass").value}).then(function(r){
-    if(r.error){$("lMsg").className="msg err";$("lMsg").textContent="Email හෝ Password වැරදියි. ("+(r.error.message||"")+")";}
-    else{$("lPass").value="";loginD.close();}
+function build(){
+  grid.innerHTML="";
+  T.forEach(function(t,k){
+    var url=O[t.k]||t.u||"";
+    var off=!t.doc&&!t.cat&&!url;
+    var a=document.createElement(t.cat?"button":(off?"div":"a"));
+    a.className="tile"+(off?" off":"");
+    a.style.setProperty("--p",PAL[k%3]);
+    if(t.cat){a.type="button";a.addEventListener("click",function(){openPanel(t);});}
+    else if(off){a.setAttribute("aria-disabled","true");}
+    else{a.href=t.doc?docUrl:url.trim();a.target="_blank";a.rel="noopener";}
+    a.innerHTML='<span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24">'+IC[t.i]+'</svg></span><span class="lb"></span>'+(off?'<span class="tag">ළඟදීම</span>':'');
+    a.querySelector(".lb").textContent=t.n;
+    grid.appendChild(a);
   });
-});
+}
+build();
+/* Admin පිටුවෙන් සුරැකූ Link ලබා ගෙන බොත්තම් යළි සාදයි */
+if(sb){sb.from("tile_site_links").select("tile_key,url").then(function(r){
+  if(r.error||!r.data)return;
+  r.data.forEach(function(x){O[x.tile_key]=x.url;});build();
+});}
 
-var rows=[],status="",hasSort=true;
+$("pClose").addEventListener("click",function(){panel.close();});
+panel.addEventListener("click",function(e){if(e.target===panel)panel.close();});
 function openPanel(t){
   cur=t;rows=[];status="ප්‍රවේශ වෙමින්...";
   $("pTitle").textContent=t.n;render();panel.showModal();
@@ -223,74 +172,33 @@ function openPanel(t){
   load();
 }
 function load(){
-  var c=cur.cat,q=sb.from("links").select("*").eq("category",c);
+  var c=cur.cat,q=sb.from("site_links").select("*").eq("category",c);
   q=hasSort?q.order("sort_order",{ascending:true,nullsFirst:false}).order("created_at",{ascending:false}):q.order("created_at",{ascending:false});
   q.then(function(r){
     if(!cur||cur.cat!==c)return;
-    /* sort_order තීරුව තවම නැත්නම් පැරණි පිළිවෙලට (අලුත්ම මුලින්) වැටේ */
     if(r.error&&hasSort&&(r.error.code==="42703"||/sort_order/.test(r.error.message||""))){hasSort=false;load();return;}
     if(r.error){status="Link ලබා ගැනීමට නොහැකි විය.";rows=[];}
     else{rows=r.data||[];status=rows.length?"":"තවම Link නැත.";}
     render();
   });
 }
-/* Admin: Link එකක් ඉහළට (-1) / පහළට (+1) යැවීම; නව පිළිවෙල 0,1,2… ලෙස සුරැකේ */
-function move(i,d){
-  var j=i+d;if(j<0||j>=rows.length)return;
-  var t=rows[i];rows[i]=rows[j];rows[j]=t;render();
-  var ups=[];
-  rows.forEach(function(r,k){if(r.sort_order!==k){r.sort_order=k;ups.push(sb.from("links").update({sort_order:k}).eq("id",r.id).select());}});
-  Promise.all(ups).then(function(rs){
-    if(rs.some(function(x){return x.error||!x.data||!x.data.length;})){alert("පිළිවෙල සුරැකීමට නොහැකි විය. නැවත පිවිසී උත්සාහ කරන්න.");load();}
-  });
-}
-function normUrl(u){u=u.trim();if(!/^https?:\/\//i.test(u))u="https://"+u;try{var x=new URL(u);return(x.protocol==="http:"||x.protocol==="https:")?x.href:"";}catch(e){return"";}}
+function normUrl(u){u=(u||"").trim();if(!/^https?:\/\//i.test(u))u="https://"+u;try{var x=new URL(u);return(x.protocol==="http:"||x.protocol==="https:")?x.href:"";}catch(e){return"";}}
 function copyText(txt,btn){
   var done=function(){var o=btn.textContent;btn.textContent="පිටපත් විය ✓";setTimeout(function(){btn.textContent=o;},1500);};
-  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(done,function(){fb();});}else fb();
   function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done();}catch(e){}ta.remove();}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(done,fb);}else fb();
 }
 function render(){
-  var L=$("pList"),A=$("pAdd");L.innerHTML="";A.innerHTML="";
+  var L=$("pList");L.innerHTML="";
   if(status){var p=document.createElement("p");p.className="empty";p.textContent=status;L.appendChild(p);}
-  rows.forEach(function(r,i){
+  rows.forEach(function(r){
     var it=document.createElement("div");it.className="item";
-    var a=document.createElement("a");a.href=normUrl(r.url)||"#";a.target="_blank";a.rel="noopener";
-    a.textContent=r.title;
+    var a=document.createElement("a");a.href=normUrl(r.url)||"#";a.target="_blank";a.rel="noopener";a.textContent=r.title;
     if(cur.copy){var s=document.createElement("small");s.textContent=r.url;a.appendChild(s);}
     it.appendChild(a);
-    if(cur.copy){var c=document.createElement("button");c.type="button";c.className="btn";c.textContent="Copy";
-      c.addEventListener("click",function(){copyText(r.url,c);});it.appendChild(c);}
-    if(isAdmin&&hasSort){
-      [["↑",-1,"ඉහළට යවන්න"],["↓",1,"පහළට යවන්න"]].forEach(function(m){
-        var g=document.createElement("button");g.type="button";g.className="btn";g.textContent=m[0];g.title=m[2];g.setAttribute("aria-label",m[2]);
-        g.disabled=(m[1]<0&&i===0)||(m[1]>0&&i===rows.length-1);
-        g.addEventListener("click",function(){move(i,m[1]);});it.appendChild(g);
-      });
-    }
-    if(isAdmin){var d=document.createElement("button");d.type="button";d.className="btn";d.textContent="ඉවත් කරන්න";
-      d.addEventListener("click",function(){
-        if(!confirm("මෙම Link එක ඉවත් කරන්නද?"))return;
-        sb.from("links").delete().eq("id",r.id).then(function(x){if(x.error)alert("ඉවත් කළ නොහැකි විය.");else load();});
-      });it.appendChild(d);}
+    if(cur.copy){var c=document.createElement("button");c.type="button";c.className="btn";c.textContent="Copy";c.addEventListener("click",function(){copyText(r.url,c);});it.appendChild(c);}
     L.appendChild(it);
   });
-  if(!isAdmin)return; /* admin නොවන විට / logout වූ විට Link එකතු කිරීම සහ ඉවත් කිරීම නොපෙන්වයි */
-  var f=document.createElement("form");
-  f.innerHTML='<input name="t" placeholder="නම / විස්තරය" required><input name="u" placeholder="Link (https://...)" required><div class="bar"><button class="btn dark" type="submit">Link එකතු කරන්න</button></div><p class="msg" role="alert"></p>';
-  f.addEventListener("submit",function(e){
-    e.preventDefault();
-    var u=normUrl(f.u.value),m=f.querySelector(".msg");
-    if(!u){m.className="msg err";m.textContent="වලංගු Link එකක් ඇතුළත් කරන්න.";return;}
-    var row={category:cur.cat,title:f.t.value.trim(),url:u};
-    if(hasSort){var mx=rows.length-1;rows.forEach(function(r){if(typeof r.sort_order==="number"&&r.sort_order>mx)mx=r.sort_order;});row.sort_order=mx+1;}
-    sb.from("links").insert(row).then(function(r){
-      if(r.error){console.error(r.error);m.className="msg err";m.textContent="එකතු කළ නොහැකි විය: ["+(r.error.code||"")+"] "+(r.error.message||"");}
-      else{f.reset();load();}
-    });
-  });
-  A.appendChild(f);
-  if(!hasSort){var n=document.createElement("p");n.className="msg";n.textContent="පිළිවෙල සැකසීමට Supabase හි links වගුවට sort_order තීරුව එක් කරන්න (SQL උපදෙස් බලන්න).";A.appendChild(n);}
 }
 </script>
 </body>
