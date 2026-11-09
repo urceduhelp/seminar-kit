@@ -285,7 +285,7 @@ function render(){
     var row={category:cur.cat,title:f.t.value.trim(),url:u};
     if(hasSort){var mx=rows.length-1;rows.forEach(function(r){if(typeof r.sort_order==="number"&&r.sort_order>mx)mx=r.sort_order;});row.sort_order=mx+1;}
     sb.from("links").insert(row).then(function(r){
-      if(r.error){m.className="msg err";m.textContent="එකතු කළ නොහැකි විය. නැවත පිවිසෙන්න.";}
+      if(r.error){console.error(r.error);m.className="msg err";m.textContent="එකතු කළ නොහැකි විය: ["+(r.error.code||"")+"] "+(r.error.message||"");}
       else{f.reset();load();}
     });
   });
